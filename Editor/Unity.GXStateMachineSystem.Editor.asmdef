@@ -1,0 +1,16 @@
+{
+    "name": "Unity.GXStateMachineSystem.Editor",
+    "references": [
+        "GUID:ee5ead6ef0273e34d84972c596afa0d5",
+        "GUID:cb75b2638942e3144b0a8446c6baea65",
+        "GUID:b278b75b487a73a47897c9d20c15ff0d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
