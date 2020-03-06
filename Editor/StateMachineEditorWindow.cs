@@ -7,6 +7,7 @@ namespace GX.StateMachineSystem
 {
     public class StateMachineEditorWindow : EditorWindow
     {
+        private static Rect smEditorRect, smPropertiesRect;
         private static readonly Color backgroundColor = Color.grey, fieldColor = Color.white;
         private static readonly Color gridColor = Color.black;
         private static readonly int gridSpace = 20;
@@ -16,8 +17,9 @@ namespace GX.StateMachineSystem
         private static readonly Vector2 size = new Vector2(700, 500); //default window size
         private static readonly float scrollwheelMultiplier = 0.01f;
 
-        private StateMachineEditor sm; //selected sm
+        private StateMachineEditor sm, lastsm; //selected sm
         private SMElementEditor selected;
+        private Editor varHandleEditor;
 
         private Vector2 dragOffset;
 
@@ -42,14 +44,46 @@ namespace GX.StateMachineSystem
         }
         private void OnGUI()
         {
+            int width6 = Screen.width / 6;
+            smEditorRect = new Rect(Vector2.zero, new Vector2(Screen.width - width6, Screen.height));
+            smPropertiesRect = new Rect(new Vector2(Screen.width - width6, 0), new Vector2(width6, Screen.height));
+
+            GUILayout.BeginHorizontal();
+
+            GUILayout.BeginArea(smEditorRect);
+            DrawSMEditor();
+            GUILayout.EndArea();
+
+            GUILayout.BeginArea(smPropertiesRect);
+            DrawSMProperties();
+            GUILayout.EndArea();
+
+            GUILayout.EndHorizontal();
+        }
+
+        private void DrawSMProperties()
+        {
+            int i = 0;
+            if (!sm)
+                return;
+
+            GUILayout.Label("Properties");
+            i = GUILayout.SelectionGrid(i, new string[] { "Var", "Con", "Beh" }, 3);
+
+            sm.propertiesScroll = EditorGUILayout.BeginScrollView(sm.propertiesScroll, false, true);
+            varHandleEditor.OnInspectorGUI();
+            GUILayout.EndScrollView();
+
+            //GUILayout.FlexibleSpace
+        }
+        private void DrawSMEditor()
+        {
             GUILayout.BeginVertical();
 
             DrawBackground();
 
             if (sm)
             {
-                GUI.backgroundColor = Color.cyan;
-                sm.drawCenter = new Vector2(Screen.width / 2, Screen.height / 2);
                 DrawSMDiagram();
                 ProcessEvents();
             }
@@ -58,13 +92,12 @@ namespace GX.StateMachineSystem
             SMField();
             Save();
             GUILayout.EndHorizontal();
-           
+
             GUILayout.EndVertical();
         }
-
         private void DrawBackground()
         {
-            //paint window background cheat
+            //paint window background cheat :)
             GUI.backgroundColor = backgroundColor;
             GUI.Box(new Rect(Vector2.zero, new Vector2(Screen.width, Screen.height)), "");
 
@@ -77,12 +110,17 @@ namespace GX.StateMachineSystem
         }
         private void DrawSMDiagram()
         {
+            GUI.backgroundColor = Color.cyan;
+            sm.drawCenter = new Vector2(Screen.width / 2, Screen.height / 2);
+
             foreach (SMElementEditor s in sm.elems)
                 s.Draw();
         }
         private void ProcessEvents()
         {
             Event e = Event.current;
+            if (!smEditorRect.Contains(e.mousePosition))
+                return;
             switch (e.type)
             {
                 case EventType.ContextClick:
@@ -137,24 +175,16 @@ namespace GX.StateMachineSystem
         }
         private void SMField()
         {
-
             GUI.backgroundColor = fieldColor;
             StateMachine smo = (StateMachine)EditorGUILayout.ObjectField("SM", sm ? sm.stateMachine : null, typeof(StateMachine), false);
 
-            if (smo && (!sm || smo != sm.stateMachine))
-            {
+            if (!smo)
                 sm = null;
-
-                foreach (var sme in Resources.FindObjectsOfTypeAll<StateMachineEditor>())
-                {
-                    if (sme.stateMachine == smo)
-                    { sm = sme; break; }
-                }
-
-                if(sm == null)
-                    sm = StateMachineEditor.CreateEditor(smo);
+            else if (!sm || smo != sm.stateMachine)
+            {
+                sm = StateMachineEditor.GetCreateEditor(smo);
+                varHandleEditor = Editor.CreateEditor(sm.varHandleEd);
             }
-
         }
         private void Save()
         {

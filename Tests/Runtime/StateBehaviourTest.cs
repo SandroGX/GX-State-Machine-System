@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+using GX.VarSystem;
 
 namespace GX.StateMachineSystem
 {
@@ -8,17 +8,15 @@ namespace GX.StateMachineSystem
     {
         public string test;
 
-        /*
-        public override void Init()
-        {
-            throw new System.NotImplementedException();
-        }
-        */
+        [HideInInspector] public VarAccesser<Animator> testVariable = new VarAccesser<Animator>();
+        [HideInInspector] public VarAccesser<string> testVariable2 = new VarAccesser<string>();
+        [HideInInspector] public VarAccesser<Rigidbody> testVariable3 = new VarAccesser<Rigidbody>();
+        [HideInInspector] [VarIdx(typeof(Animator))] public int testVariable4 = 0;
 
-        public override void OnStateEnter(SMClient client)
+        public override void OnStateEnter(SMClient c)
         {
-            Debug.Log("Hi, entered. " + test);
-        }
+            Debug.Log($"Hi, entered. {test} {testVariable[c].deltaPosition} {testVariable3[c].velocity} {c.Variables.Get<Animator>(testVariable4).gameObject}");
+        } 
 
         public override void OnStateExit(SMClient client)
         {

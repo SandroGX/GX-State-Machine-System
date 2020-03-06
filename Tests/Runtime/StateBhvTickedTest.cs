@@ -8,7 +8,7 @@ namespace GX.StateMachineSystem
         public string test;
 
         public GenericYieldInstructionGetter yield;
-        protected override object YieldInstruction { get => new WaitForSeconds(1);/*yield.GetYieldInstruction();*/ }
+        protected override object YieldInstruction { get => yield.GetYieldInstruction(); }
 
         protected override void OnState(SMClient client)
         {

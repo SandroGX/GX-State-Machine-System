@@ -163,6 +163,7 @@ namespace GX.StateMachineSystem
             foreach (Handle h in Next)
                 h.RemoveBack(this);
 
+            SODatabase.Clear(state, state.behaviours);
             DestroyImmediate(state, true);
             sm.Remove(this);
         }

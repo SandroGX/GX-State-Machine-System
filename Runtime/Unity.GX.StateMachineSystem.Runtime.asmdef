@@ -1,0 +1,27 @@
+{
+    "name": "Unity.GX.StateMachineSystem.Runtime",
+    "references": [
+        "GUID:b278b75b487a73a47897c9d20c15ff0d",
+        "GUID:72082d6c3d8682a49b51c8e49495904c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.gx.varsystem",
+            "expression": "0.0.0",
+            "define": "VARIABLE_SYSTEM"
+        },
+        {
+            "name": "com.gx.tools",
+            "expression": "0.0.0",
+            "define": "TOOLS"
+        }
+    ],
+    "noEngineReferences": false
+}

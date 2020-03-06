@@ -4,15 +4,17 @@
   "displayName": "GX State Machine System",
   "description": "Package to create state machines",
   "unity": "2019.1",
-  "dependencies": 
-  {
+  "dependencies": {
     "com.gx.tools": "0.0.0"
   },
-  "keywords": [ "GX", "state machine" ],
-  "author": 
-  {
+  "keywords": [
+    "GX",
+    "state machine"
+  ],
+  "author": {
     "name": "SandroGX",
     "email": "sandroalemflor@hotmail.com",
     "discord": "SandroGX#6938"
-  }
+  },
+  "hideInEditor": false
 }

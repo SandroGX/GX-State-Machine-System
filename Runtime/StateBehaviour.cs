@@ -5,8 +5,11 @@ namespace GX.StateMachineSystem
     //A behaviour of a state
     public abstract class StateBehaviour : ScriptableObject
     {
+        private bool init = false;
+        public virtual void Init() { init = true; }
+
         //what it does on entering state
-        public virtual void OnStateEnter(SMClient client) { }
+        public virtual void OnStateEnter(SMClient client) { if (!init) Init(); }
         //what it does on leaving state
         public virtual void OnStateExit(SMClient client) { }
         //what it does when client is stopped

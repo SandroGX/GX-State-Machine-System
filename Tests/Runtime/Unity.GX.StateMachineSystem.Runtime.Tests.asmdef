@@ -1,6 +1,7 @@
 {
-    "name": "Unity.GXStateMachineSystem",
+    "name": "Unity.GX.StateMachineSystem.Runtime.Tests",
     "references": [
+        "GUID:ee5ead6ef0273e34d84972c596afa0d5",
         "GUID:b278b75b487a73a47897c9d20c15ff0d",
         "GUID:72082d6c3d8682a49b51c8e49495904c"
     ],
@@ -11,5 +12,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [
+	{
+            "name": "com.gx.varsystem",
+            "expression": "0.0.0",
+            "define": "VARIABLE_SYSTEM"
+        }
+	],
+    "noEngineReferences": false
 }

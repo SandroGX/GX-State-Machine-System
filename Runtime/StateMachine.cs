@@ -24,48 +24,6 @@ namespace GX.StateMachineSystem
             client.Init(this, varHolder);
             return client;
         }
-
-        /*
-        //start state machine
-        public void StartSM(SMClient client)
-        {
-            client.StateMachineUpdate = CoroutineAux.StartCoroutineLoop(UpdateSM, null, client);
-
-            //for 1st start
-            if (!client.CurrentState)
-            {
-                client.CurrentState = entry;
-                client.CurrentState.EnterState(client);
-            }
-            else //for restart
-                client.CurrentState.StartClient(client);
-        }
-
-        //stop state machine on client
-        public void StopSM(SMClient client)
-        {
-            client.CurrentState.StopClient(client);
-
-            GameManager.StopCoroutineGM(client.StateMachineUpdate);
-            client.StateMachineUpdate = null;
-        }
-
-        //update state machine
-        private void UpdateSM(SMClient client)
-        {
-            GoToNextState(client);
-        }
-
-        //go to next state, through transitions, if possible
-        private void GoToNextState(SMClient client)
-        {
-            foreach(SMElement e in client.CurrentState.next)
-            {
-                if (e.Enter(client))
-                    return;
-            }
-        }
-        */
     }
 
 
@@ -74,7 +32,7 @@ namespace GX.StateMachineSystem
     {
         public State CurrentState { get; set; }
         public VarHandle Variables { get; set; }
-        public StateMachine SM {get; set;}
+        public StateMachine SM { get; set; }
         public Coroutine StateMachineUpdate { get; set; }
 
         public void Init(StateMachine sm, object varHolder)

@@ -220,6 +220,11 @@ namespace GX.StateMachineSystem
         {
             StartHandle.RemoveNext(this);
             EndHandle.RemoveBack(this);
+
+            foreach(Transition t in transitions)
+                SODatabase.Clear(t, t.conditions);
+            
+            SODatabase.Clear(sm.stateMachine, transitions);
             sm.Remove(this);
 
             if (!StartHandle.HasTransitions())
